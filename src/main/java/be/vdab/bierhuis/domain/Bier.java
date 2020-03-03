@@ -8,11 +8,11 @@ public class Bier {
     private final String naam;
     private final long brouwerId;
     private final long soortId;
-    private final double alcohol;
+    private final BigDecimal alcohol;
     private final BigDecimal prijs;
     private final long besteld;
 
-    public Bier(long id, String naam, long brouwerId, long soortId, double alcohol, BigDecimal prijs, long besteld) {
+    public Bier(long id, String naam, long brouwerId, long soortId, BigDecimal alcohol, BigDecimal prijs, long besteld) {
         this.id = id;
         this.naam = naam;
         this.brouwerId = brouwerId;
@@ -38,7 +38,7 @@ public class Bier {
         return soortId;
     }
 
-    public double getAlcohol() {
+    public BigDecimal getAlcohol() {
         return alcohol;
     }
 

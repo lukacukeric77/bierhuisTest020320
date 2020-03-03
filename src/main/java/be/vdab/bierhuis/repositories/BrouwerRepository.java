@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BrouwerRepository {
 
-    List<Brouwer> findAll();
-    Optional<Brouwer> findById();
+    List<Brouwer> findAllBrouwers();
+    Optional<Brouwer> findBrewerByItsId(long id);
 
 }

@@ -1,6 +1,7 @@
 package be.vdab.bierhuis.repositories;
 
 import be.vdab.bierhuis.domain.Bier;
+import be.vdab.bierhuis.domain.BierBrouwerAmalgam;
 import be.vdab.bierhuis.exceptions.BierNietGevondenException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,8 +21,15 @@ public class JdbcBierRepository implements BierRepository{
     private final RowMapper<Bier> bierRowMapper =
             (result, rowNum)->
                     new Bier(result.getLong("id"), result.getString("naam"),
-                            result.getLong("brouwerId"), result.getLong("soortId"), result.getDouble("alcohool"),
+                            result.getLong("brouwerId"), result.getLong("soortId"), result.getBigDecimal("alcohol"),
                             result.getBigDecimal("prijs"), result.getLong("besteld"));
+    private final RowMapper<BierBrouwerAmalgam> bierBrouwerAmalgamRowMapper =
+            ((result, rowNum) ->
+                    new BierBrouwerAmalgam(result.getLong("id"), result.getString("naam"),
+                            result.getLong("brouwerId"), result.getLong("soortId"), result.getBigDecimal("alcohol"),
+                            result.getBigDecimal("prijs"), result.getLong("besteld"),
+                            result.getLong("id"), result.getString("naam"), result.getString("straat"), result.getString("huisNr"),
+                            result.getInt("postcode"), result.getString("gemeente"), result.getBigDecimal("omzet")));
 
     public JdbcBierRepository(JdbcTemplate template) {
         this.template = template;
@@ -33,40 +41,12 @@ public class JdbcBierRepository implements BierRepository{
     }
 
     @Override
-    public Optional<Bier> findById(long id) {
+    public Optional<BierBrouwerAmalgam> findAllBierenByIdOfBrouwer(long id) {
         try {
-            String sql = "select naam, alcohol, prijs from bieren where id=?";
-            return Optional.of(template.queryForObject(sql, bierRowMapper, id));
+            String sql = "select * from bieren inner join brouwers on bieren.brouwerid = brouwers.id where brouwers.id=?";
+            return Optional.of(template.queryForObject(sql, bierBrouwerAmalgamRowMapper, id));
         } catch (IncorrectResultSizeDataAccessException ex){
             return Optional.empty();
         }
-    }
-
-    @Override
-    public void update(Bier bier) {
-        String sql = "update bieren set besteld=? where id=?";
-        if (template.update(sql, bier.getBesteld(), bier.getId())==0){
-            throw new BierNietGevondenException();
-        }
-
-    }
-
-    @Override
-    public List<Bier> findByIds(Set<Long> ids) {
-        if (ids.isEmpty()){
-            return Collections.emptyList();
-        }
-        String sql = "select id, naam, alcohol from bieren  where id in (";
-        StringBuilder builder = new StringBuilder(sql);
-        ids.forEach(id -> builder.append("?,"));
-        builder.setCharAt(builder.length()-1, ')');
-        builder.append(" order by id");
-        return template.query(builder.toString(), ids.toArray(), bierRowMapper);
-    }
-
-    @Override
-    public List<Bier> findByNaam(String naam) {
-        String sql = "select bieren.naam from bieren inner join brouwers on brouwerid=brouwers.id where brouwers.naam=?";
-        return template.query(sql, bierRowMapper, naam);
     }
 }

@@ -1,6 +1,6 @@
 package be.vdab.bierhuis.domain;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 public class Brouwer {
 
@@ -10,9 +10,9 @@ public class Brouwer {
     private final String huisNr;
     private final int postcode;
     private final String gemeente;
-    private final BigInteger omzet;
+    private final BigDecimal omzet;
 
-    public Brouwer(long id, String naam, String straat, String huisNr, int postcode, String gemeente, BigInteger omzet) {
+    public Brouwer(long id, String naam, String straat, String huisNr, int postcode, String gemeente, BigDecimal omzet) {
         this.id = id;
         this.naam = naam;
         this.straat = straat;
@@ -46,7 +46,7 @@ public class Brouwer {
         return gemeente;
     }
 
-    public BigInteger getOmzet() {
+    public BigDecimal getOmzet() {
         return omzet;
     }
 }
