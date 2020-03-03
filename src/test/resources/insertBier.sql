@@ -1,1 +1,1 @@
-insert into bieren(id, naam, brouwerid, soortid, alcohol, prijs, besteld) VALUES (0, 'test', 5, 5, 0.5, 10, 0);
+insert into bieren (id, naam, brouwerid, soortid, alcohol, prijs, besteld) values (0,'test',0,0,10,10,5)

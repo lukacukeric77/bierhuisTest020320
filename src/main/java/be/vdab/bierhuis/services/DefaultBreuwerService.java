@@ -24,7 +24,7 @@ public class DefaultBreuwerService implements BrouwersService {
     }
 
     @Override
-    public Optional<Brouwer> findById(long id) {
+    public Optional<Brouwer> findBrewerByItsId(long id) {
         return repository.findBrewerByItsId(id);
     }
 }

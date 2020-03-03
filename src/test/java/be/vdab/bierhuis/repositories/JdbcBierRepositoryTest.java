@@ -5,7 +5,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-
 import static org.assertj.core.api.Assertions.*;
 
 
@@ -21,28 +20,19 @@ class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
         this.repository = repository;
     }
 
-    private long idVanTestBieren(){
-        return super.jdbcTemplate.queryForObject("select id from bieren where naam='test'", Long.class);
-    }
+//    private long idVanTestBieren(){
+////        return super.jdbcTemplate.queryForObject("select id from bieren where brouwerid=0", Long.class);
+//    }
 
     @Test
     void findAantalBieren() {
     }
 
     @Test
-    void findAllBierenByIdOfBrouwer(Long id) {
-//        assertThat(repository.findAllBierenByIdOfBrouwer(idVanTestBieren()).get().;
+    void findAllBierenByIdOfBrouwer() {
+//        assertThat(repository.findAllBierenByIdOfBrouwer(idVanTestBieren()).get(0).getNaam()).isEqualTo("test");
+
     }
 
-    @Test
-    void update() {
-    }
 
-    @Test
-    void findByIds() {
-    }
-
-    @Test
-    void findByNaam() {
-    }
 }

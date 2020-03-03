@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface BrouwersService {
 
     List<Brouwer> findAllBrouwers();
-    Optional<Brouwer> findById(long id);
+    Optional<Brouwer> findBrewerByItsId(long id);
 
 }

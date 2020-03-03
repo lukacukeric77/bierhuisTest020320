@@ -4,12 +4,12 @@
 <body>
 <nav th:replace="fragments::menu"></nav>
 
-
-<h1>Bieren</h1>
-<ul>
-    <li th:text="${bieren}"></li>
+<div th:object="${brouwer}">
+<h1 th:text="${brouwer.naam}"></h1>
+<ul th:each="bier:${bieren}" th:object="${bier}">
+    <li th:text="*{naam}"></li>
 </ul>
-
+</div>
 
 </body>
 </html>

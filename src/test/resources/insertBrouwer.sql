@@ -1,0 +1,1 @@
+insert into brouwers (id, naam, straat, huisNr, postcode, gemeente, omzet) values (0, 'test', 'ulica', 'broj', 1000, 'opcina', 0);

@@ -28,7 +28,7 @@ public class DefaultBierService implements BierService {
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<BierBrouwerAmalgam> findAllBierenByIdOfBrouwer(long id) {
+    public List<Bier> findAllBierenByIdOfBrouwer(long id) {
         return bierRepository.findAllBierenByIdOfBrouwer(id);
     }
 

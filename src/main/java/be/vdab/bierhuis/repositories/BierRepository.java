@@ -11,7 +11,7 @@ import java.util.Set;
 public interface BierRepository {
 
     long findAantalBieren();
-    Optional<BierBrouwerAmalgam> findAllBierenByIdOfBrouwer(long id);
+    List<Bier> findAllBierenByIdOfBrouwer(long id);
 
 
 

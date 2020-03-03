@@ -23,13 +23,6 @@ public class JdbcBierRepository implements BierRepository{
                     new Bier(result.getLong("id"), result.getString("naam"),
                             result.getLong("brouwerId"), result.getLong("soortId"), result.getBigDecimal("alcohol"),
                             result.getBigDecimal("prijs"), result.getLong("besteld"));
-    private final RowMapper<BierBrouwerAmalgam> bierBrouwerAmalgamRowMapper =
-            ((result, rowNum) ->
-                    new BierBrouwerAmalgam(result.getLong("id"), result.getString("naam"),
-                            result.getLong("brouwerId"), result.getLong("soortId"), result.getBigDecimal("alcohol"),
-                            result.getBigDecimal("prijs"), result.getLong("besteld"),
-                            result.getLong("id"), result.getString("naam"), result.getString("straat"), result.getString("huisNr"),
-                            result.getInt("postcode"), result.getString("gemeente"), result.getBigDecimal("omzet")));
 
     public JdbcBierRepository(JdbcTemplate template) {
         this.template = template;
@@ -41,12 +34,9 @@ public class JdbcBierRepository implements BierRepository{
     }
 
     @Override
-    public Optional<BierBrouwerAmalgam> findAllBierenByIdOfBrouwer(long id) {
-        try {
-            String sql = "select * from bieren inner join brouwers on bieren.brouwerid = brouwers.id where brouwers.id=?";
-            return Optional.of(template.queryForObject(sql, bierBrouwerAmalgamRowMapper, id));
-        } catch (IncorrectResultSizeDataAccessException ex){
-            return Optional.empty();
-        }
+    public List<Bier> findAllBierenByIdOfBrouwer(long id) {
+        String sql = "select id, naam, brouwerid, soortid, alcohol, prijs, besteld from bieren where brouwerid=?";
+            return template.query(sql, bierRowMapper, id);
     }
+
 }
