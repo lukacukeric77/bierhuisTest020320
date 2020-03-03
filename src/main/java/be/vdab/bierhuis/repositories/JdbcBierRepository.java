@@ -63,4 +63,10 @@ public class JdbcBierRepository implements BierRepository{
         builder.append(" order by id");
         return template.query(builder.toString(), ids.toArray(), bierRowMapper);
     }
+
+    @Override
+    public List<Bier> findByNaam(String naam) {
+        String sql = "select bieren.naam from bieren inner join brouwers on brouwerid=brouwers.id where brouwers.naam=?";
+        return template.query(sql, bierRowMapper, naam);
+    }
 }

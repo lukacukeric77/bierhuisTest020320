@@ -13,6 +13,7 @@ public interface BierRepository {
     Optional<Bier> findById (long id);
     void update(Bier bier);
     List<Bier> findByIds(Set<Long> ids);
+    List<Bier> findByNaam(String naam);
 
 
 }
