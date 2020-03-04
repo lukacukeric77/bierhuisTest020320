@@ -6,7 +6,7 @@
 
 <h1 th:text="|${brouwer.naam} (${brouwer.gemeente})|"></h1>
 <ul th:each="bier:${bieren}" th:object="${bier}">
-    <a th:href="@{/brouwers/{id}/{idOfBier} (idOfBier=*{id})}" th:text="*{naam}"></a>
+    <a th:href="@{/bier/{idOfBier} (idOfBier=*{id})}" th:text="*{naam}"></a>
 </ul>
 
 </body>

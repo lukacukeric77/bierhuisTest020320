@@ -43,17 +43,4 @@ class BrouwersController {
                 return modelAndView;
     }
 
-    @GetMapping("{id}/{idOfBier}")
-    public ModelAndView bierDetails(@PathVariable long idOfBier){
-        ModelAndView modelAndView = new ModelAndView("bier");
-        Optional<Bier> optionalBier = bierService.findBierById(idOfBier);
-        optionalBier.ifPresent(bier -> modelAndView.addObject("bier", bier));
-        modelAndView.addObject("aantalForm", new AantalForm(null));
-        return modelAndView;
-    }
-
-    @PostMapping("{id}/{idOfBier}")
-    public ModelAndView toevoegenForm(){
-        return null;
-    }
 }
