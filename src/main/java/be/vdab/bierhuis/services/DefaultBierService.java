@@ -32,4 +32,9 @@ public class DefaultBierService implements BierService {
         return bierRepository.findAllBierenByIdOfBrouwer(id);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<Bier> findBierById(long id) {
+        return bierRepository.findBierById(id);
+    }
 }

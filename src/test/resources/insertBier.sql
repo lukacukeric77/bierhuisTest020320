@@ -1,1 +1,2 @@
-insert into bieren (id, naam, brouwerid, soortid, alcohol, prijs, besteld) values (0,'test',0,0,10,10,5)
+insert into bieren (naam, brouwerid, soortid, alcohol, prijs, besteld)
+values ('test', (select id from brouwers where brouwers.naam = 'brouwerTest'), (select id from soorten where soorten.naam = 'soortTest'), 10, 10, 5);

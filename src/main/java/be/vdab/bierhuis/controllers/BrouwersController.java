@@ -1,5 +1,6 @@
 package be.vdab.bierhuis.controllers;
 
+import be.vdab.bierhuis.domain.Bier;
 import be.vdab.bierhuis.domain.Brouwer;
 import be.vdab.bierhuis.services.BierService;
 import be.vdab.bierhuis.services.BrouwersService;
@@ -38,5 +39,13 @@ class BrouwersController {
             modelAndView.addObject("brouwer", brouwer);
         });
                 return modelAndView;
+    }
+
+    @GetMapping("{id}/{idOfBier}")
+    public ModelAndView bierDetails(@PathVariable long idOfBier){
+        ModelAndView modelAndView = new ModelAndView("bier");
+        Optional<Bier> optionalBier = bierService.findBierById(idOfBier);
+        optionalBier.ifPresent(bier -> modelAndView.addObject("bier", bier));
+        return modelAndView;
     }
 }

@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(JdbcBierRepository.class)
+@Sql("/insertBrouwer.sql")
+@Sql("/insertSoort.sql")
 @Sql("/insertBier.sql")
 class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -20,19 +22,28 @@ class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
         this.repository = repository;
     }
 
-//    private long idVanTestBieren(){
-////        return super.jdbcTemplate.queryForObject("select id from bieren where brouwerid=0", Long.class);
-//    }
+    private long idVanTestBrouwer(){
+        return super.jdbcTemplate.queryForObject("select id from brouwers where naam = 'brouwerTest'", Long.class);
+    }
+
+    private long idVanTestBier(){
+        return super.jdbcTemplate.queryForObject("select id from bieren where naam='test'", Long.class);
+    }
 
     @Test
     void findAantalBieren() {
+        assertThat(repository.findAantalBieren()).isEqualTo(super.countRowsInTable(BIEREN));
     }
 
     @Test
     void findAllBierenByIdOfBrouwer() {
-//        assertThat(repository.findAllBierenByIdOfBrouwer(idVanTestBieren()).get(0).getNaam()).isEqualTo("test");
-
+        assertThat(repository.findAllBierenByIdOfBrouwer(idVanTestBrouwer()).get(0).getNaam()).isEqualTo("test");
     }
 
 
+    @Test
+    void findBierById() {
+        assertThat(repository.findBierById(idVanTestBier()).get().getNaam()).isEqualTo("test");
+
+    }
 }
