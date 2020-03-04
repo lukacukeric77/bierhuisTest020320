@@ -26,13 +26,13 @@ class JdbcBrouwerRepositoryTest extends AbstractTransactionalJUnit4SpringContext
                 .hasSize(super.countRowsInTable(BROUWERS));
     }
 
-    private long idVanTestPizza() {
+    private long idVanTestBrouwer() {
         long id = super.jdbcTemplate.queryForObject("select id from brouwers where naam='test'", Long.class);
         return id;
     }
 
     @Test
     void findBrewerByItsId() {
-        assertThat(repository.findBrewerByItsId(idVanTestPizza()).get().getNaam()).isEqualTo("test");
+        assertThat(repository.findBrewerByItsId(idVanTestBrouwer()).get().getNaam()).isEqualTo("test");
     }
 }
