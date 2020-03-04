@@ -1,15 +1,15 @@
 package be.vdab.bierhuis.forms;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.math.BigInteger;
 
 public class AantalForm {
-    private final AtomicInteger aantal;
+    private final BigInteger aantal;
 
-    public AantalForm(AtomicInteger aantal) {
+    public AantalForm(BigInteger aantal) {
         this.aantal = aantal;
     }
 
-    public AtomicInteger getAantal() {
+    public BigInteger getAantal() {
         return aantal;
     }
 }
