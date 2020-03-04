@@ -6,11 +6,13 @@
 
 <h1 th:text="*{naam}"></h1>
 <h3>Alcohol</h3>
-<p th:text="*{alcohol}"> %</p>
+<p th:text="|*{alcohol} %|"></p>
 <h3>Prijs</h3>
-<p th:text="*{prijs}"> &euro;</p>
-
+<p th:text="|*{prijs} &euro;|"></p>
 <h3>Aantal</h3>
-
+<form method="post" th:action="@{/{id}/{idOfBier}}" th:object="${aantalForm}">
+    <input th:field="*{aantal}" type="number" required min="0">
+    <button>Toevoegen</button>
+</form>
 </body>
 </html>

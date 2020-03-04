@@ -1,18 +1,13 @@
 package be.vdab.bierhuis.repositories;
 
 import be.vdab.bierhuis.domain.Bier;
-import be.vdab.bierhuis.domain.BierBrouwerAmalgam;
-import be.vdab.bierhuis.exceptions.BierNietGevondenException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public class JdbcBierRepository implements BierRepository {
