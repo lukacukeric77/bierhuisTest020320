@@ -36,7 +36,7 @@ class JdbcBestelBonLijnRepositoryTest extends AbstractTransactionalJUnit4SpringC
 
     @Test
     void create() {
-        repository.create(new Bestelbonlijn(idVanTestBestelbon(), idVanTestBier(), BigInteger.ZERO, BigDecimal.ZERO));
+        repository.create(new Bestelbonlijn(idVanTestBestelbon(), idVanTestBier(), 0, BigDecimal.ZERO));
         assertThat(super.countRowsInTableWhere("bestelbonlijnen", "bestelbonid=" + idVanTestBestelbon())).isOne();
     }
 }
