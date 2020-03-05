@@ -1,0 +1,1 @@
+insert into bestelbonlijnen(bestelbonid, bierid, aantal, prijs) values ((select id from bestelbonnen where naam = 'bestelTest'), (select id from bieren where naam = 'test'), 10, 5);
