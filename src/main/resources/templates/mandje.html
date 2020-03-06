@@ -19,6 +19,9 @@
         <td th:text="${entry.key}"></td>
         <td th:text="${entry.key} * ${entry.value.prijs}">
     </tr>
+    <tr>
+        <td th:text="${#aggregates.sum(aantalsWithBiers.![key * value.prijs])}"></td>
+    </tr>
 </table>
 </body>
 </html>
