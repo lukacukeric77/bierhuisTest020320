@@ -17,7 +17,7 @@
         <td th:text="${entry.value.naam}"></td>
         <td th:text="${entry.value.prijs}"></td>
         <td th:text="${entry.key}"></td>
-<!--        <td th:text="${}">-->
+        <td th:text="${entry.key} * ${entry.value.prijs}">
 <!--        <td th:text="{}">-->
     </tr>
 
