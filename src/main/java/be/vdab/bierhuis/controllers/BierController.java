@@ -7,11 +7,10 @@ import be.vdab.bierhuis.forms.AantalForm;
 import be.vdab.bierhuis.services.BestelbonLijnService;
 import be.vdab.bierhuis.services.BierService;
 import be.vdab.bierhuis.services.BrouwersService;
+import be.vdab.bierhuis.sessions.Mandje;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -19,29 +18,31 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("bier")
-public class BierController {
+class BierController {
 
     private final BierService bierService;
-    private final BestelbonLijnService bestelbonLijnService;
+    private final Mandje mandje;
 
-    public BierController(BierService bierService, BestelbonLijnService bestelbonLijnService) {
+    public BierController(BierService bierService, Mandje mandje) {
         this.bierService = bierService;
-        this.bestelbonLijnService = bestelbonLijnService;
+        this.mandje = mandje;
     }
 
     @GetMapping("{idOfBier}")
-    public ModelAndView bierDetails(@PathVariable long idOfBier){
+    public ModelAndView bierDetails(@PathVariable long idOfBier) {
         ModelAndView modelAndView = new ModelAndView("bier");
         Optional<Bier> optionalBier = bierService.findBierById(idOfBier);
         optionalBier.ifPresent(bier -> modelAndView.addObject("bier", bier));
-        modelAndView.addObject("aantalForm", new AantalForm(null));
+        modelAndView.addObject("aantalForm", new AantalForm(0, idOfBier));
         return modelAndView;
     }
 
-    @PostMapping("{idOfBier}")
-    public ModelAndView toevoegenForm(@PathVariable long idOfBier){
-return null;
-
+    @PostMapping ("form")
+    public String tovoegenMaandje(@Valid AantalForm aantalForm, Errors errors) {
+        if (errors.hasErrors()){
+            return "redirect:/{idOfBier}";
+        }
+        mandje.fillIn(aantalForm.getIdOfBier(), aantalForm.getAantal());
+        return "redirect:/mandje";
     }
-
 }

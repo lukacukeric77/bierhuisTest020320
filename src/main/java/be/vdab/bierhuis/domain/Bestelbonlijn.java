@@ -8,10 +8,10 @@ public class Bestelbonlijn {
 
     private final long bestelbonid;
     private final long bierid;
-    private final BigInteger aantal;
+    private final long aantal;
     private final BigDecimal prijs;
 
-    public Bestelbonlijn(long bestelbonid, long bierid, BigInteger aantal, BigDecimal prijs) {
+    public Bestelbonlijn(long bestelbonid, long bierid, long aantal, BigDecimal prijs) {
         this.bestelbonid = bestelbonid;
         this.bierid = bierid;
         this.aantal = aantal;
@@ -26,7 +26,7 @@ public class Bestelbonlijn {
         return bierid;
     }
 
-    public BigInteger getAantal() {
+    public long getAantal() {
         return aantal;
     }
 
