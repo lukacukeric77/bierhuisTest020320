@@ -18,14 +18,14 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("bier")
-public class BierController {
+class BierController {
 
     private final BierService bierService;
-    private final BestelbonLijnService bestelbonLijnService;
+    private final Mandje mandje;
 
-    public BierController(BierService bierService, BestelbonLijnService bestelbonLijnService) {
+    public BierController(BierService bierService, Mandje mandje) {
         this.bierService = bierService;
-        this.bestelbonLijnService = bestelbonLijnService;
+        this.mandje = mandje;
     }
 
     @GetMapping("{idOfBier}")
@@ -37,15 +37,12 @@ public class BierController {
         return modelAndView;
     }
 
-    @GetMapping("form")
-    public String toevoegenForm(@Valid AantalForm aantalForm, Errors errors) {
-        if (errors.hasErrors()) {
-            return "{idOfBier}";
+    @PostMapping ("form")
+    public String tovoegenMaandje(@Valid AantalForm aantalForm, Errors errors) {
+        if (errors.hasErrors()){
+            return "redirect:/{idOfBier}";
         }
-
-            //write here something that will redirect you to mandje and include things in mandje;
-
-//        return "redirect:/maandje";
-        return "{idOfBier}";
+        mandje.fillIn(aantalForm.getIdOfBier(), aantalForm.getAantal());
+        return "redirect:/mandje";
     }
 }

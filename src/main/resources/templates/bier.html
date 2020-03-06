@@ -2,7 +2,7 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::head(title='Bier')"></head>
 <body th:object="${bier}">
-<script th:src="@{/js/preventDoubleSubmit.js}" defer></script>
+<!--<script th:src="@{/js/preventDoubleSubmit.js}" defer></script>-->
 <nav th:replace="fragments::menu"></nav>
 
 <h1 th:text="*{naam}"></h1>
@@ -11,9 +11,9 @@
 <h3>Prijs</h3>
 <p th:text="|*{prijs} &euro;|"></p>
 <h3>Aantal</h3>
-<form method="get" th:action="@{/bier/form}" th:object="${aantalForm}">
+<form method="post" th:action="@{/bier/form}" th:object="${aantalForm}">
     <input th:field="*{aantal}" type="number" required min="0">
-    <input th:field="*{idOfBier}" type="hidden" name="id" th:value="${bier.id}">
+    <input th:field="*{idOfBier}" type="hidden" th:value="${bier.id}">
     <button>Toevoegen</button>
 </form>
 </body>
