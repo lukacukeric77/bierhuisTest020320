@@ -16,11 +16,14 @@
     <tr th:each="entry:${aantalsWithBiers}">
         <td th:text="${entry.value.naam}"></td>
         <td th:text="${entry.value.prijs}"></td>
-        <td th:text="${entry.key}"></td>
-        <td th:text="${entry.key} * ${entry.value.prijs}">
+        <td style="text-align: center"  th:text="${entry.key}"></td>
+        <td style="text-align: right" th:text="${entry.key} * ${entry.value.prijs}">
     </tr>
     <tr>
-        <td th:text="${#aggregates.sum(aantalsWithBiers.![key * value.prijs])}"></td>
+        <td></td>
+        <td></td>
+        <td style="font-weight: bold">Total:</td>
+        <td style="text-align: right; font-weight: bold" th:text="${#aggregates.sum(aantalsWithBiers.![key * value.prijs])}"></td>
     </tr>
 </table>
 </body>
