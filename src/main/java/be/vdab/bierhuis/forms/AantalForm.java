@@ -1,5 +1,7 @@
 package be.vdab.bierhuis.forms;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -12,6 +14,7 @@ public class AantalForm {
         this.idOfBier = idOfBier;
     }
 
+    @NotNull @Positive
     public long getAantal() {
         return aantal;
     }

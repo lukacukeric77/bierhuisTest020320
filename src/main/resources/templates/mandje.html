@@ -26,5 +26,25 @@
         <td style="text-align: right; font-weight: bold" th:text="${#aggregates.sum(aantalsWithBiers.![key * value.prijs])}"></td>
     </tr>
 </table>
+
+<form method="post" th:action="@{/mandje/form}" th:object="${bestelbonForm}">
+    <label>Naam: <span th:errors="*{naam}"></span>
+        <input th:field="*{naam}" autofocus required>
+    </label>
+    <label>Straat: <span th:errors="*{straat}"></span>
+        <input th:field="*{straat}" required>
+    </label>
+    <label>Huisnummer: <span th:errors="*{huisNr}"></span>
+        <input th:field="*{huisNr}" required>
+    </label>
+    <label>Postcode: <span th:errors="*{postcode}"></span>
+        <input th:field="*{postcode}" required>
+    </label>
+    <label>Gemeente: <span th:errors="*{gemeente}"></span>
+        <input th:field="*{gemeente}" required>
+    </label>
+    <input type="hidden" name="id" value="0"/>
+    <button>Als bestelbon bevestigen</button>
+</form>
 </body>
 </html>
