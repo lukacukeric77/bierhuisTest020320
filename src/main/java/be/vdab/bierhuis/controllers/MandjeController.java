@@ -40,12 +40,17 @@ class MandjeController {
     public ModelAndView showMandje() {
         ModelAndView modelAndView = new ModelAndView("mandje");
         Set<Long> keys = mandje.getKeys();
-        Map<Long, Bier> aantalsWithBiers = new LinkedHashMap<>();
+        List<Bier> biers = new LinkedList<>();
+//        Map<Long, Bier> aantalsWithBiers = new LinkedHashMap<>();
         for (Long key : keys) {
             Optional<Bier> optionalBier = bierService.findBierById(key);
-            optionalBier.ifPresent(bier -> aantalsWithBiers.put(mandje.getAantal(key), bier));
+            optionalBier.ifPresent(bier -> {
+                biers.add(bier);
+                bestelbonlijnList.add(new Bestelbonlijn(0, bier.getId(), mandje.getAantal(key), bier.getPrijs()));
+            });
         }
-        modelAndView.addObject("aantalsWithBiers", aantalsWithBiers);
+        modelAndView.addObject("bestelbonlijnList", bestelbonlijnList);
+        modelAndView.addObject("bieren", biers);
         modelAndView.addObject("bestelbonForm", new Bestelbon(0, "", "", "", 0, ""));
 
 
