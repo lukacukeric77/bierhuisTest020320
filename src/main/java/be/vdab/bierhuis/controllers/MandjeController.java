@@ -29,7 +29,8 @@ class MandjeController {
     private final BestelBonService bestelBonService;
     private List<Bestelbonlijn> bestelbonlijnList = new LinkedList<>();
 
-    public MandjeController(Mandje mandje, BestelbonLijnService bestelbonLijnService, BierService bierService, BestelBonService bestelBonService) {
+    public MandjeController(Mandje mandje, BestelbonLijnService bestelbonLijnService,
+                            BierService bierService, BestelBonService bestelBonService) {
         this.mandje = mandje;
         this.bestelbonLijnService = bestelbonLijnService;
         this.bierService = bierService;
@@ -46,12 +47,14 @@ class MandjeController {
             Optional<Bier> optionalBier = bierService.findBierById(key);
             optionalBier.ifPresent(bier -> {
                 biers.add(bier);
-                bestelbonlijnList.add(new Bestelbonlijn(0, bier.getId(), mandje.getAantal(key), bier.getPrijs()));
+                bestelbonlijnList.add(new Bestelbonlijn(0, bier.getId(),
+                        mandje.getAantal(key), bier.getPrijs()));
             });
         }
         modelAndView.addObject("bestelbonlijnList", bestelbonlijnList);
         modelAndView.addObject("bieren", biers);
-        modelAndView.addObject("bestelbonForm", new Bestelbon(0, "", "", "", 0, ""));
+        modelAndView.addObject("bestelbonForm", new Bestelbon(0, "",
+                "", "", 0, ""));
 
 
         return modelAndView;
