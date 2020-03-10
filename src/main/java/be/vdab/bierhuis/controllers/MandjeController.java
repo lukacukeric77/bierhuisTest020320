@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("mandje")
@@ -25,7 +26,7 @@ class MandjeController {
     private final BestelbonLijnService bestelbonLijnService;
     private final BierService bierService;
     private final BestelBonService bestelBonService;
-    private Set<Bestelbonlijn> bestelbonlijnSet = new LinkedHashSet<>();
+    private List<Bestelbonlijn> bestelbonlijnSet = new LinkedList<>();
 
     public MandjeController(Mandje mandje, BestelbonLijnService bestelbonLijnService,
                             BierService bierService, BestelBonService bestelBonService) {
@@ -39,6 +40,7 @@ class MandjeController {
     public ModelAndView showMandje() {
         ModelAndView modelAndView = new ModelAndView("mandje");
         Set<Long> keys = mandje.getKeys();
+        Set<Bestelbonlijn> workingSet = new LinkedHashSet<>();
         Map<Bier, Long> aantalsWithBiers = new LinkedHashMap<>();
         for (Long key : keys) {
             Optional<Bier> optionalBier = bierService.findBierById(key);
@@ -46,7 +48,8 @@ class MandjeController {
                 aantalsWithBiers.put(bier, mandje.getAantal(key));
                 Bestelbonlijn bestelbonlijn = new Bestelbonlijn(0, bier.getId(),
                         mandje.getAantal(key), bier.getPrijs());
-                bestelbonlijnSet.add(bestelbonlijn);
+                workingSet.add(bestelbonlijn);
+                bestelbonlijnSet = workingSet.stream().distinct().collect(Collectors.toList());
             });
 
         }
@@ -66,6 +69,7 @@ class MandjeController {
         long idBestelBon = bestelBonService.create(bestelbon);
         for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
             bestelbonlijn.setBestelbonid(idBestelBon);
+            bestelbonLijnService.create(bestelbonlijn);
         }
         ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
         modelAndView.addObject("length", bestelbonlijnSet.size());
