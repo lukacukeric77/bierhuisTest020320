@@ -15,6 +15,7 @@ public class Bestelbon {
     private final String huisNr;
     @Range(min = 1000, max = 9999)
     private final int postcode;
+    @NotBlank
     private final String gemeente;
 
     public Bestelbon(long id, String naam, String straat, String huisNr, int postcode, String gemeente) {
