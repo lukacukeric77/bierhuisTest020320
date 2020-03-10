@@ -30,6 +30,10 @@ class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
         return super.jdbcTemplate.queryForObject("select id from bieren where naam='test'", Long.class);
     }
 
+    private long idVanTestSoort(){
+        return super.jdbcTemplate.queryForObject("select id from soorten where naam='soortTest'", Long.class);
+    }
+
     @Test
     void findAantalBieren() {
         assertThat(repository.findAantalBieren()).isEqualTo(super.countRowsInTable(BIEREN));
@@ -45,5 +49,11 @@ class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
     void findBierById() {
         assertThat(repository.findBierById(idVanTestBier()).get().getNaam()).isEqualTo("test");
 
+    }
+
+    @Test
+    void updateBesteldInBier() {
+        repository.updateBesteldInBier(10, idVanTestBier());
+        assertThat(super.jdbcTemplate.queryForObject("select besteld from bieren where id=?", Long.class, idVanTestBier())).isEqualTo(15);
     }
 }

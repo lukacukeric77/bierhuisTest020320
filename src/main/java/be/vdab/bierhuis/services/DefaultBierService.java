@@ -35,4 +35,9 @@ public class DefaultBierService implements BierService {
     public Optional<Bier> findBierById(long id) {
         return bierRepository.findBierById(id);
     }
+
+    @Override
+    public void updateBesteldInBier(long ammount, long id) {
+        bierRepository.updateBesteldInBier(ammount, id);
+    }
 }

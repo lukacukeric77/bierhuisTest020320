@@ -58,19 +58,22 @@ class MandjeController {
     }
 
     @PostMapping("form")
-    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session){
-        if (errors.hasErrors()){
+    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session) {
+        if (errors.hasErrors()) {
 //            return "redirect:/brouwers"; // change, brouwers is here to notify mistake
             return null;
         }
         long idBestelBon = bestelBonService.create(bestelbon);
-        for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet){
+        for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
             bestelbonlijn.setBestelbonid(idBestelBon);
         }
-            ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
+        ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
         modelAndView.addObject("length", bestelbonlijnSet.size());
-                session.invalidate();
-            return modelAndView;
+
+        // change the besteld in bieren via bierService.updateBesteldInBier(ammount, id);
+
+        session.invalidate();
+        return modelAndView;
 //            bestelbonLijnService.create(bestelbonlijn);
 //        }
 //        session.invalidate();
