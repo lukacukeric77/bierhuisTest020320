@@ -9,7 +9,6 @@ import be.vdab.bierhuis.services.BierService;
 import be.vdab.bierhuis.sessions.Mandje;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("mandje")
@@ -27,7 +25,7 @@ class MandjeController {
     private final BestelbonLijnService bestelbonLijnService;
     private final BierService bierService;
     private final BestelBonService bestelBonService;
-    private Set<Bestelbonlijn> bestelbonlijnList = new LinkedHashSet<>();
+    private Set<Bestelbonlijn> bestelbonlijnSet = new LinkedHashSet<>();
 
     public MandjeController(Mandje mandje, BestelbonLijnService bestelbonLijnService,
                             BierService bierService, BestelBonService bestelBonService) {
@@ -46,8 +44,9 @@ class MandjeController {
             Optional<Bier> optionalBier = bierService.findBierById(key);
             optionalBier.ifPresent(bier -> {
                 aantalsWithBiers.put(bier, mandje.getAantal(key));
-                bestelbonlijnList.add(new Bestelbonlijn(0, bier.getId(),
-                        mandje.getAantal(key), bier.getPrijs()));
+                Bestelbonlijn bestelbonlijn = new Bestelbonlijn(0, bier.getId(),
+                        mandje.getAantal(key), bier.getPrijs());
+                bestelbonlijnSet.add(bestelbonlijn);
             });
 
         }
@@ -65,10 +64,10 @@ class MandjeController {
             return null;
         }
         long idBestelBon = bestelBonService.create(bestelbon);
-        for (Bestelbonlijn bestelbonlijn : bestelbonlijnList){
+        for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet){
             bestelbonlijn.setBestelbonid(idBestelBon);
         }
-            ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnList);
+            ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
                 session.invalidate();
             return modelAndView;
 //            bestelbonLijnService.create(bestelbonlijn);
