@@ -2,7 +2,7 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments::head(title='Bier')"></head>
 <body>
-<!--<script th:src="@{/js/preventDoubleSubmit.js}" defer></script>-->
+<script th:src="@{/js/preventDoubleSubmit.js}" defer></script>
 <nav th:replace="fragments::menu"></nav>
 
 <h1 th:if="${aantalsWithBiers} !=null">Maandje is here</h1>
@@ -27,24 +27,24 @@
     </tr>
 </table>
 
-<!--<form method="post" th:action="@{/mandje/form}" th:object="${bestelbonForm}">-->
-<!--    <label>Naam: <span th:errors="*{naam}"></span>-->
-<!--        <input th:field="*{naam}" autofocus required>-->
-<!--    </label>-->
-<!--    <label>Straat: <span th:errors="*{straat}"></span>-->
-<!--        <input th:field="*{straat}" required>-->
-<!--    </label>-->
-<!--    <label>Huisnummer: <span th:errors="*{huisNr}"></span>-->
-<!--        <input th:field="*{huisNr}" required>-->
-<!--    </label>-->
-<!--    <label>Postcode: <span th:errors="*{postcode}"></span>-->
-<!--        <input th:field="*{postcode}" required>-->
-<!--    </label>-->
-<!--    <label>Gemeente: <span th:errors="*{gemeente}"></span>-->
-<!--        <input th:field="*{gemeente}" required>-->
-<!--    </label>-->
-<!--    <input type="hidden" name="id" value="0"/>-->
-<!--    <button>Als bestelbon bevestigen</button>-->
-<!--</form>-->
+<form method="post" th:action="@{/mandje/form}" th:object="${bestelbonForm}">
+    <label>Naam: <span th:errors="*{naam}"></span>
+        <input th:field="*{naam}" autofocus required>
+    </label>
+    <label>Straat: <span th:errors="*{straat}"></span>
+        <input th:field="*{straat}" required>
+    </label>
+    <label>Huisnummer: <span th:errors="*{huisNr}"></span>
+        <input th:field="*{huisNr}" required>
+    </label>
+    <label>Postcode: <span th:errors="*{postcode}"></span>
+        <input th:field="*{postcode}" required>
+    </label>
+    <label>Gemeente: <span th:errors="*{gemeente}"></span>
+        <input th:field="*{gemeente}" required>
+    </label>
+    <input type="hidden" name="id" value="0"/>
+    <button>Als bestelbon bevestigen</button>
+</form>
 </body>
 </html>

@@ -18,12 +18,12 @@ public class DefaultBreuwerService implements BrouwersService {
         this.repository = repository;
     }
 
-    @Override
+    @Override @Transactional(readOnly = true)
     public List<Brouwer> findAllBrouwers() {
         return repository.findAllBrouwers();
     }
 
-    @Override
+    @Override  @Transactional(readOnly = true)
     public Optional<Brouwer> findBrewerByItsId(long id) {
         return repository.findBrewerByItsId(id);
     }

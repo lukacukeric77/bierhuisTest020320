@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 class MandjeControlerAdvice {
     private final Mandje mandje;
 
-    public MandjeControlerAdvice(Mandje mandje) {
+    MandjeControlerAdvice(Mandje mandje) {
         this.mandje = mandje;
     }
 

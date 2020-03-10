@@ -27,7 +27,7 @@ class MandjeController {
     private final BestelbonLijnService bestelbonLijnService;
     private final BierService bierService;
     private final BestelBonService bestelBonService;
-    private List<Bestelbonlijn> bestelbonlijnList = new LinkedList<>();
+    private Set<Bestelbonlijn> bestelbonlijnList = new LinkedHashSet<>();
 
     public MandjeController(Mandje mandje, BestelbonLijnService bestelbonLijnService,
                             BierService bierService, BestelBonService bestelBonService) {
@@ -41,35 +41,41 @@ class MandjeController {
     public ModelAndView showMandje() {
         ModelAndView modelAndView = new ModelAndView("mandje");
         Set<Long> keys = mandje.getKeys();
-        List<Bier> biers = new LinkedList<>();
         Map<Bier, Long> aantalsWithBiers = new LinkedHashMap<>();
         for (Long key : keys) {
             Optional<Bier> optionalBier = bierService.findBierById(key);
             optionalBier.ifPresent(bier -> {
                 aantalsWithBiers.put(bier, mandje.getAantal(key));
-                biers.add(bier);
                 bestelbonlijnList.add(new Bestelbonlijn(0, bier.getId(),
                         mandje.getAantal(key), bier.getPrijs()));
             });
+
         }
         modelAndView.addObject("aantalsWithBiers", aantalsWithBiers);
-//        modelAndView.addObject("bestelbonlijnList", bestelbonlijnList);
-//        modelAndView.addObject("bieren", biers);
-//        modelAndView.addObject("bestelbonForm", new Bestelbon(0, "",
-//                "", "", 0, ""));
-
+        modelAndView.addObject("bestelbonForm", new Bestelbon(0, "",
+                "", "", 0, ""));
 
         return modelAndView;
     }
 
     @PostMapping("form")
-    public String bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session){
+    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session){
         if (errors.hasErrors()){
-            return "redirect:/brouwers"; // change, brouwers is here to notify mistake
+//            return "redirect:/brouwers"; // change, brouwers is here to notify mistake
+            return null;
         }
         long idBestelBon = bestelBonService.create(bestelbon);
-        session.invalidate();
-        return "redirect:/";  // change to what is required
+        for (Bestelbonlijn bestelbonlijn : bestelbonlijnList){
+            bestelbonlijn.setBestelbonid(idBestelBon);
+        }
+            ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnList);
+                session.invalidate();
+            return modelAndView;
+//            bestelbonLijnService.create(bestelbonlijn);
+//        }
+//        session.invalidate();
+//        return "redirect:/";  // change to what is required
+//        return null;
 
     }
 

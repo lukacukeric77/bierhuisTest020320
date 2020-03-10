@@ -25,7 +25,6 @@ public class JdbcBestelBonLijnRepository implements BestelBonLijnenRepository{
         this.template = template;
         this.insert = new SimpleJdbcInsert(this.template);
         insert.withTableName("bestelbonlijnen");
-        insert.usingGeneratedKeyColumns("bestelbonid");
     }
 
     @Override
@@ -35,7 +34,7 @@ public class JdbcBestelBonLijnRepository implements BestelBonLijnenRepository{
         kolomWarden.put("bierid", bestelbonlijn.getBierid());
         kolomWarden.put("aantal", bestelbonlijn.getAantal());
         kolomWarden.put("prijs", bestelbonlijn.getPrijs());
-        insert.executeAndReturnKey(kolomWarden);
+        insert.execute(kolomWarden);
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Bestelbonlijn {
 
-    private final long bestelbonid;
+    private long bestelbonid;
     private final long bierid;
     private final long aantal;
     private final BigDecimal prijs;
@@ -32,5 +32,9 @@ public class Bestelbonlijn {
 
     public BigDecimal getPrijs() {
         return prijs;
+    }
+
+    public void setBestelbonid(long bestelbonid) {
+        this.bestelbonid = bestelbonid;
     }
 }
