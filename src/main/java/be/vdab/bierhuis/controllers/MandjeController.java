@@ -68,6 +68,7 @@ class MandjeController {
             bestelbonlijn.setBestelbonid(idBestelBon);
         }
             ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
+        modelAndView.addObject("length", bestelbonlijnSet.size());
                 session.invalidate();
             return modelAndView;
 //            bestelbonLijnService.create(bestelbonlijn);
