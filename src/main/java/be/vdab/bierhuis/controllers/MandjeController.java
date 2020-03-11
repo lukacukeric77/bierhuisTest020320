@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -72,18 +73,13 @@ class MandjeController {
             bestelbonLijnService.create(bestelbonlijn);
             bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
         }
-        ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
-        modelAndView.addObject("length", bestelbonlijnSet.size());
-
-        // change the besteld in bieren via bierService.updateBesteldInBier(ammount, id);
-
+//        ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
+        ModelAndView modelAndView = new ModelAndView("check");
+//        modelAndView.addObject("length", bestelbonlijnSet.size());
+        modelAndView.addObject("bestelBonID", idBestelBon);
         session.invalidate();
         return modelAndView;
-//            bestelbonLijnService.create(bestelbonlijn);
-//        }
-//        session.invalidate();
-//        return "redirect:/";  // change to what is required
-//        return null;
+
 
     }
 
