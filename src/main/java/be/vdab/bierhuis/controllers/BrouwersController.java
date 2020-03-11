@@ -27,20 +27,24 @@ class BrouwersController {
     }
 
     @GetMapping
-    public ModelAndView brouwers(){
+    public ModelAndView brouwers() {
         return new ModelAndView("brouwers", "brouwers", brouwersService.findAllBrouwers());
 
     }
 
     @GetMapping("{id}")
-    public ModelAndView bierVinder(@PathVariable long id){
+    public ModelAndView bierVinder(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("bieren");
-        modelAndView.addObject("bieren", bierService.findAllBierenByIdOfBrouwer(id));
+        if (!bierService.findAllBierenByIdOfBrouwer(id).isEmpty()) {
+            modelAndView.addObject("bieren", bierService.findAllBierenByIdOfBrouwer(id));
+        } else {
+            modelAndView.addObject("bieren", null);
+        }
         Optional<Brouwer> optionalBrouwer = brouwersService.findBrewerByItsId(id);
         optionalBrouwer.ifPresent(brouwer -> {
             modelAndView.addObject("brouwer", brouwer);
         });
-                return modelAndView;
+        return modelAndView;
     }
 
 }
