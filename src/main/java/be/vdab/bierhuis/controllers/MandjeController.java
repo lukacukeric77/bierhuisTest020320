@@ -62,7 +62,7 @@ class MandjeController {
     }
 
     @PostMapping("form")
-    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session) {
+    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
 //            return "redirect:/brouwers"; // change, brouwers is here to notify mistake
             return null;
@@ -74,8 +74,11 @@ class MandjeController {
             bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
         }
 //        ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
-        ModelAndView modelAndView = new ModelAndView("check");
 //        modelAndView.addObject("length", bestelbonlijnSet.size());
+
+//        redirectAttributes.addAttribute("bestelBonAttId", idBestelBon);
+
+        ModelAndView modelAndView = new ModelAndView("check");
         modelAndView.addObject("bestelBonID", idBestelBon);
         session.invalidate();
         return modelAndView;
