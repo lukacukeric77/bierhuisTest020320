@@ -19,3 +19,10 @@ ul{
     padding: 0;
     margin: 0;
 }
+
+input{
+    display: block;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+}
