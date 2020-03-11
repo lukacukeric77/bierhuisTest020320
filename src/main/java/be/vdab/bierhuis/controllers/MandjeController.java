@@ -64,7 +64,6 @@ class MandjeController {
     @PostMapping("form")
     public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
-//            return "redirect:/brouwers"; // change, brouwers is here to notify mistake
             return null;
         }
         long idBestelBon = bestelBonService.create(bestelbon);
@@ -73,10 +72,6 @@ class MandjeController {
             bestelbonLijnService.create(bestelbonlijn);
             bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
         }
-//        ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
-//        modelAndView.addObject("length", bestelbonlijnSet.size());
-
-//        redirectAttributes.addAttribute("bestelBonAttId", idBestelBon);
 
         ModelAndView modelAndView = new ModelAndView("check");
         modelAndView.addObject("bestelBonID", idBestelBon);

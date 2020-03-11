@@ -8,5 +8,4 @@ import java.util.List;
 public interface BestelBonLijnenRepository {
 
     void create(Bestelbonlijn bestelbonlijn);
-    List<Bestelbonlijn> findAll();
 }

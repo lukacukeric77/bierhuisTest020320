@@ -15,10 +15,6 @@ public class JdbcBestelBonLijnRepository implements BestelBonLijnenRepository{
 
     private final JdbcTemplate template;
     private final SimpleJdbcInsert insert;
-    private final RowMapper<Bestelbonlijn> bestelbonlijnRowMapper =
-            (result, rowNr) ->
-                    new Bestelbonlijn(result.getLong("bestelbondid"), result.getLong("beirid"),
-                            result.getLong("aantal"), result.getBigDecimal("prijs"));
 
 
     public JdbcBestelBonLijnRepository(JdbcTemplate template) {
@@ -37,9 +33,5 @@ public class JdbcBestelBonLijnRepository implements BestelBonLijnenRepository{
         insert.execute(kolomWarden);
     }
 
-    @Override
-    public List<Bestelbonlijn> findAll() {
-        String sql = "select bestelbonid, bierid, aantal, prijs from bestelbonlijnen";
-        return template.query(sql, bestelbonlijnRowMapper);
-    }
+
 }

@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments::head(title='CHECKPAGE')"></head>
+<head th:replace="fragments::head(title='BYE-BYE')"></head>
 <body>
-<!--<script th:src="@{/js/preventDoubleSubmit.js}" defer></script>-->
 <nav th:replace="fragments::menu"></nav>
-
-<!--<ul th:each="bestel:${bestelbonlijst}">-->
-<!--    <li th:text="|${bestel.bestelbonid}, ${bestel.bierid}, ${bestel.aantal}, ${bestel.prijs}|"></li>-->
-
-<!--</ul>-->
-
-<!--<h1 th:text="${length}"></h1>-->
 
 <h1 th:if="${bestelBonID} != null">Je winkelwagentje is bevestig als bestelbon <span th:text="${bestelBonID}"></span>.</h1>
 

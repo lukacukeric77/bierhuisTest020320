@@ -22,9 +22,4 @@ public class DefaultBestelbonLijnService implements BestelbonLijnService {
        repository.create(bestelbonlijn);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<Bestelbonlijn> findAll() {
-        return repository.findAll();
-    }
 }
