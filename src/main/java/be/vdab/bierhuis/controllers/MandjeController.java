@@ -70,6 +70,7 @@ class MandjeController {
         for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
             bestelbonlijn.setBestelbonid(idBestelBon);
             bestelbonLijnService.create(bestelbonlijn);
+            bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
         }
         ModelAndView modelAndView = new ModelAndView("check", "bestelbonlijst", bestelbonlijnSet);
         modelAndView.addObject("length", bestelbonlijnSet.size());
