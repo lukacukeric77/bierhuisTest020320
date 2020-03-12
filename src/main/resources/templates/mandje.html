@@ -41,7 +41,7 @@
         <input th:field="*{postcode}" required>
     </label>
     <label>Gemeente: <span th:errors="*{gemeente}"></span>
-        <input th:field="*{gemeente}" required>
+        <input th:field="*{gemeente}" required min="1000" max="9999">
     </label>
     <input type="hidden" name="id" value="0"/>
     <button>Als bestelbon bevestigen</button>

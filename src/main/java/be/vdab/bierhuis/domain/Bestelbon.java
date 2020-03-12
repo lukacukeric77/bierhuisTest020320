@@ -3,6 +3,8 @@ package be.vdab.bierhuis.domain;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class Bestelbon {
 
@@ -13,6 +15,7 @@ public class Bestelbon {
     private final String straat;
     @NotBlank
     private final String huisNr;
+    @NotNull @Positive
     @Range(min = 1000, max = 9999)
     private final int postcode;
     @NotBlank

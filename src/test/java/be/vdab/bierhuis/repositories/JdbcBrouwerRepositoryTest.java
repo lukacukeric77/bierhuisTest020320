@@ -35,4 +35,9 @@ class JdbcBrouwerRepositoryTest extends AbstractTransactionalJUnit4SpringContext
     void findBrewerByItsId() {
         assertThat(repository.findBrewerByItsId(idVanTestBrouwer()).get().getNaam()).isEqualTo("brouwerTest");
     }
+
+    @Test
+    void findBrewerByIdThatDoesNotExist(){
+        assertThat(repository.findBrewerByItsId(-1)).isEmpty();
+    }
 }

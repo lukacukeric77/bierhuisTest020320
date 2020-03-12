@@ -62,23 +62,27 @@ class MandjeController {
     }
 
     @PostMapping("form")
-    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon, Errors errors, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String bestelbonForm(@Valid Bestelbon bestelbon,
+                                Errors errors,
+                                HttpSession session,
+                                RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
-            return null;
+
+            return "redirect:/mandje";
         }
-        long idBestelBon = bestelBonService.create(bestelbon);
-        for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
-            bestelbonlijn.setBestelbonid(idBestelBon);
-            bestelbonLijnService.create(bestelbonlijn);
-            bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
+        if (mandje.isFilled()) {
+            long idBestelBon = bestelBonService.create(bestelbon);
+            for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
+                bestelbonlijn.setBestelbonid(idBestelBon);
+                bestelbonLijnService.create(bestelbonlijn);
+                bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
+            }
+
+            redirectAttributes.addAttribute("bestelBonID", idBestelBon);
+            session.invalidate();
+            return "redirect:/";
         }
-
-        ModelAndView modelAndView = new ModelAndView("check");
-        modelAndView.addObject("bestelBonID", idBestelBon);
-        session.invalidate();
-        return modelAndView;
-
-
+        return null;
     }
 
 

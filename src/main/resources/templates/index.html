@@ -4,14 +4,17 @@
 <body>
 <nav th:replace="fragments::menu"></nav>
 
-<h1>Welkom in het huis van de Belgische bieren!</h1>
-<img th:src="@{/images/bierhuis.jpg}" alt="Bierhuis image missing">
+<div th:if="${param.bestelBonID} == null">
+    <h1>Welkom in het huis van de Belgische bieren!</h1>
+    <img th:src="@{/images/bierhuis.jpg}" alt="Bierhuis image missing">
 
-<h3>We heben momenteel <!--/*@thymesVar id="index" type="be.vdab.bierhuis.controllers.IndexController"
+    <h3>We heben momenteel <!--/*@thymesVar id="index" type="be.vdab.bierhuis.controllers.IndexController"
 */-->
-<span th:text="${index}"></span> bieren.</h3>
+        <span th:text="${index}"></span> bieren.</h3>
+</div>
 
-<!--<h2 th:if="${param.bestelBonID} != null">Je winkelwagentje is bevestig als bestelbon <span th:text="${param.bestelBonID}"></span>.</h2>-->
+<h2 th:if="${param.bestelBonID} != null">Je winkelwagentje is bevestig als bestelbon <span
+        th:text="${param.bestelBonID}"></span>.</h2>
 
 </body>
 </html>

@@ -1,8 +1,10 @@
 package be.vdab.bierhuis.repositories;
 
+import be.vdab.bierhuis.exceptions.BierNietGevondenException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import static org.assertj.core.api.Assertions.*;
@@ -52,8 +54,20 @@ class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
     }
 
     @Test
+    void findBierByIdThrowsException() {
+        assertThat(repository.findBierById(-1)).isEmpty();
+    }
+
+    @Test
     void updateBesteldInBier() {
         repository.updateBesteldInBier(10, idVanTestBier());
         assertThat(super.jdbcTemplate.queryForObject("select besteld from bieren where id=?", Long.class, idVanTestBier())).isEqualTo(15);
+    }
+
+    @Test
+    void updateUnexistingBierGivesAFout() {
+        assertThatExceptionOfType(BierNietGevondenException.class).isThrownBy(
+                () -> repository.updateBesteldInBier(0, -1)
+        );
     }
 }
