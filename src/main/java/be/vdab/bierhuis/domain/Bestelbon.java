@@ -15,8 +15,7 @@ public class Bestelbon {
     private final String straat;
     @NotBlank
     private final String huisNr;
-    @NotNull @Positive
-    @Range(min = 1000, max = 9999)
+    @NotNull @Positive @Range(min = 1000, max = 9999)
     private final int postcode;
     @NotBlank
     private final String gemeente;

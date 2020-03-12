@@ -39,6 +39,38 @@ class MandjeController {
 
     @GetMapping
     public ModelAndView showMandje() {
+        ModelAndView modelAndView = bestelBonGeneration();
+        modelAndView.addObject(new Bestelbon(0, "",
+                "", "", 0, ""));
+
+        return modelAndView;
+    }
+
+    @PostMapping("form")
+    public ModelAndView bestelbonForm(@Valid Bestelbon bestelbon,
+                                Errors errors,
+                                HttpSession session,
+                                RedirectAttributes redirectAttributes) {
+
+        if (errors.hasErrors()) {
+            return bestelBonGeneration();
+        }
+
+        if (mandje.isFilled()) {
+            long idBestelBon = bestelBonService.create(bestelbon);
+            for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
+                bestelbonlijn.setBestelbonid(idBestelBon);
+                bestelbonLijnService.create(bestelbonlijn);
+                bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
+            }
+            redirectAttributes.addAttribute("bestelBonID", idBestelBon);
+            session.invalidate();
+            return new ModelAndView("redirect:/");
+        }
+        return null;
+    }
+
+    private ModelAndView bestelBonGeneration() {
         ModelAndView modelAndView = new ModelAndView("mandje");
         Set<Long> keys = mandje.getKeys();
         Set<Bestelbonlijn> workingSet = new LinkedHashSet<>();
@@ -52,37 +84,9 @@ class MandjeController {
                 workingSet.add(bestelbonlijn);
                 bestelbonlijnSet = workingSet.stream().distinct().collect(Collectors.toList());
             });
-
         }
         modelAndView.addObject("aantalsWithBiers", aantalsWithBiers);
-        modelAndView.addObject("bestelbonForm", new Bestelbon(0, "",
-                "", "", 0, ""));
-
         return modelAndView;
-    }
-
-    @PostMapping("form")
-    public String bestelbonForm(@Valid Bestelbon bestelbon,
-                                Errors errors,
-                                HttpSession session,
-                                RedirectAttributes redirectAttributes) {
-        if (errors.hasErrors()) {
-
-            return "redirect:/mandje";
-        }
-        if (mandje.isFilled()) {
-            long idBestelBon = bestelBonService.create(bestelbon);
-            for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
-                bestelbonlijn.setBestelbonid(idBestelBon);
-                bestelbonLijnService.create(bestelbonlijn);
-                bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
-            }
-
-            redirectAttributes.addAttribute("bestelBonID", idBestelBon);
-            session.invalidate();
-            return "redirect:/";
-        }
-        return null;
     }
 
 

@@ -16,10 +16,6 @@ public class Mandje implements Serializable {
         idsEnAantal.put(id, aantal);
     }
 
-    public boolean hasInside(long id){
-        return idsEnAantal.containsKey(id);
-    }
-
     public boolean isFilled(){
         return !idsEnAantal.isEmpty();
     }
@@ -32,9 +28,6 @@ public class Mandje implements Serializable {
         return idsEnAantal.keySet();
     }
 
-    public Set<Map.Entry<Long, Long>> getMandje(){
-        return idsEnAantal.entrySet();
-    }
 
 
 }

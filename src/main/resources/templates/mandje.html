@@ -27,7 +27,7 @@
     </tr>
 </table>
 
-<form method="post" th:action="@{/mandje/form}" th:object="${bestelbonForm}">
+<form method="post" th:action="@{/mandje/form}" th:object="${bestelbon}">
     <label>Naam: <span th:errors="*{naam}"></span>
         <input th:field="*{naam}" autofocus required>
     </label>
