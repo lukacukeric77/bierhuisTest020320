@@ -33,7 +33,7 @@ class BierController {
         ModelAndView modelAndView = new ModelAndView("bier");
         Optional<Bier> optionalBier = bierService.findBierById(idOfBier);
         optionalBier.ifPresent(bier -> modelAndView.addObject("bier", bier));
-        modelAndView.addObject("aantalForm", new AantalForm(0, idOfBier));
+        modelAndView.addObject(new AantalForm(0, idOfBier));
         return modelAndView;
     }
 
