@@ -14,7 +14,6 @@
 <form method="post" th:action="@{/bier/form}" th:object="${aantalForm}">
     <span th:errors="*{aantal}"></span>
     <input th:field="*{aantal}" type="number" required min="1">
-    <input th:field="*{idOfBier}" type="hidden" th:value="${bier.id}">
     <button>Toevoegen</button>
 </form>
 </body>

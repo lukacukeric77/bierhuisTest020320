@@ -7,11 +7,11 @@ import java.math.BigInteger;
 
 public class AantalForm {
     private final long aantal;
-    private final long idOfBier;
+//    private final long idOfBier;
 
-    public AantalForm(long aantal, long idOfBier) {
+    public AantalForm(long aantal) {
         this.aantal = aantal;
-        this.idOfBier = idOfBier;
+//        this.idOfBier = idOfBier;
     }
 
     @NotNull @Positive
@@ -19,8 +19,8 @@ public class AantalForm {
         return aantal;
     }
 
-    public long getIdOfBier() {
-        return idOfBier;
-    }
+//    public long getIdOfBier() {
+//        return idOfBier;
+//    }
 
 }
