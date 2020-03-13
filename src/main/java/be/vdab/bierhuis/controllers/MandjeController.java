@@ -62,12 +62,12 @@ class MandjeController {
                 bestelbonlijn.setBestelbonid(idBestelBon);
                 bestelbonLijnService.create(bestelbonlijn);
                 bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
+                redirectAttributes.addAttribute("bestelBonID", idBestelBon);
+                session.invalidate();
+                return new ModelAndView("redirect:/");
             }
-            redirectAttributes.addAttribute("bestelBonID", idBestelBon);
-            session.invalidate();
-            return new ModelAndView("redirect:/");
         }
-        return null;
+        return new ModelAndView("redirect:/");
     }
 
     private ModelAndView bestelBonGeneration() {
