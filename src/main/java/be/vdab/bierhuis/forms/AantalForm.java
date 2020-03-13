@@ -6,21 +6,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class AantalForm {
-    private final long aantal;
-//    private final long idOfBier;
+    private final Long aantal;
 
-    public AantalForm(long aantal) {
+    public AantalForm(Long aantal) {
         this.aantal = aantal;
-//        this.idOfBier = idOfBier;
     }
 
     @NotNull @Positive
-    public long getAantal() {
+    public Long getAantal() {
         return aantal;
     }
-
-//    public long getIdOfBier() {
-//        return idOfBier;
-//    }
-
 }

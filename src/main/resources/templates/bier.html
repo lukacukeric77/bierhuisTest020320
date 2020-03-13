@@ -11,7 +11,7 @@
 <h3>Prijs</h3>
 <p th:text="|*{prijs} &euro;|"></p>
 <h3>Aantal</h3>
-<form method="post" th:action="@{/bier/form}" th:object="${aantalForm}">
+<form method="post" th:action="@{/bier/form/{idOfBier}(idOfBier=${bier.id})}" th:object="${aantalForm}">
     <span th:errors="*{aantal}"></span>
     <input th:field="*{aantal}" type="number" required min="1">
     <button>Toevoegen</button>

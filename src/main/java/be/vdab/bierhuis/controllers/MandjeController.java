@@ -56,18 +56,18 @@ class MandjeController {
             return bestelBonGeneration();
         }
 
-        if (mandje.isFilled()) {
-            long idBestelBon = bestelBonService.create(bestelbon);
-            for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {
-                bestelbonlijn.setBestelbonid(idBestelBon);
-                bestelbonLijnService.create(bestelbonlijn);
-                bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());
-                redirectAttributes.addAttribute("bestelBonID", idBestelBon);
-                session.invalidate();
-                return new ModelAndView("redirect:/");
+        if (mandje.isFilled()) {                                                                        //if mandje is not empty...
+            long idBestelBon = bestelBonService.create(bestelbon);                                      //...create a bestelbon in repository and get his id...
+            for (Bestelbonlijn bestelbonlijn : bestelbonlijnSet) {                                      //...for each item in mandje...
+                bestelbonlijn.setBestelbonid(idBestelBon);                                              //... add to each just created bestelbon's id on bestelbon.id...
+                bestelbonLijnService.create(bestelbonlijn);                                             //... create a bestelbonlijn in repository...
+                bierService.updateBesteldInBier(bestelbonlijn.getAantal(), bestelbonlijn.getBierid());  //... increase besteld on selected bierid, for ammount of antal
             }
+            redirectAttributes.addAttribute("bestelBonID", idBestelBon);                             // fill attributes for transport; if this is not used, it will be null
+            session.invalidate();                                                                       // drop the session, clean JSESSIONID cookie
+            return new ModelAndView("redirect:/");                                           // redirect to welcome page - if it shows message, everything should be ok
         }
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/");                                               // redirect to welcome page - if it shows normal page, no message, then mandje is empty
     }
 
     private ModelAndView bestelBonGeneration() {

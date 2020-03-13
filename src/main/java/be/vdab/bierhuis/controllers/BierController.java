@@ -36,17 +36,21 @@ class BierController {
             idOFbier = bier.getId();
             modelAndView.addObject("bier", bier);
         });
-        modelAndView.addObject(new AantalForm(0));
+        modelAndView.addObject(new AantalForm(null));
         return modelAndView;
     }
 
-    @PostMapping ("form")
-    public ModelAndView tovoegenMaandje(@Valid AantalForm aantalForm, Errors errors) {
-        ModelAndView modelAndView = new ModelAndView("bier");
+    @PostMapping ("form/{idOfBier}")
+    public ModelAndView tovoegenMaandje(@Valid AantalForm aantalForm, Errors errors, @PathVariable long idOfBier) {
         if (errors.hasErrors()){
+            ModelAndView modelAndView = new ModelAndView("bier");
+            Optional<Bier> optionalBier = bierService.findBierById(idOfBier);
+            optionalBier.ifPresent(bier -> {
+                idOFbier = bier.getId();
+                modelAndView.addObject("bier", bier);
+            });
             return modelAndView;
         }
-
         mandje.fillIn(idOFbier, aantalForm.getAantal());
         return new ModelAndView("redirect:/mandje");
     }
