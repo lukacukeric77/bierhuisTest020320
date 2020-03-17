@@ -20,6 +20,8 @@ import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
+// Dag Frank, dit is de laatste versie
+
 @Controller
 @RequestMapping("mandje")
 class MandjeController {
